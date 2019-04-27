@@ -23,6 +23,8 @@ class NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 3,
+      margin: EdgeInsets.fromLTRB(10, 10, 10, 14),
       child: GestureDetector(
         onTap: () {
           //var url = list[index]['url'];

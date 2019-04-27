@@ -46,7 +46,6 @@ class _NewsListState extends State<NewsList>{
           return NewsCard(list, index);
         },
         itemCount: list.length,
-        padding: EdgeInsets.all(6.0),
       ),
     );
   }
