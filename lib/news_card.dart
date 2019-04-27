@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import './news_open.dart';
 
-
-class NewsCard extends StatelessWidget{
-
+class NewsCard extends StatelessWidget {
   final List<dynamic> list;
   final int index;
 
   NewsCard(this.list, this.index);
-
-  _launchURL(url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
 
 
   @override
@@ -25,8 +14,10 @@ class NewsCard extends StatelessWidget{
     return Card(
       child: GestureDetector(
         onTap: () {
-          var url = list[index]['url'];
-          _launchURL(url);
+          //var url = list[index]['url'];
+          //_launchURL(url);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => NewsOpen(url: list[index]['url'])));
         },
         child: Column(
           children: <Widget>[
@@ -46,5 +37,4 @@ class NewsCard extends StatelessWidget{
       ),
     );
   }
-
 }
