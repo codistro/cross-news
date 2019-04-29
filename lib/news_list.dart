@@ -4,18 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import './news_card.dart';
 
-class NewsList extends StatefulWidget{
+class NewsList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _NewsListState();
   }
-
 }
 
-
-class _NewsListState extends State<NewsList>{
-
+class _NewsListState extends State<NewsList> {
   List<dynamic> list = [];
 
   Future<Null> getNews() async {
@@ -29,8 +26,6 @@ class _NewsListState extends State<NewsList>{
     return;
   }
 
-
-
   @override
   void initState() {
     getNews();
@@ -41,13 +36,25 @@ class _NewsListState extends State<NewsList>{
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: getNews,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return NewsCard(list, index);
-        },
-        itemCount: list.length,
-      ),
+      displacement: 100.0,
+      child: CustomScrollView(slivers: <Widget>[
+        SliverAppBar(
+            elevation: 0,
+            title: Text(
+              'Top News',
+              style: TextStyle(color: Colors.black),
+            ),
+            floating: true,
+            backgroundColor: Colors.white),
+        SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return NewsCard(list, index);
+                  },
+                  childCount: list.length,
+                ),
+              )
+      ]),
     );
   }
-
 }

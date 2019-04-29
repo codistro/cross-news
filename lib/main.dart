@@ -10,10 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('Top News'),
-            backgroundColor: Colors.red,
-          ),
+          backgroundColor: Color.fromRGBO(200, 200, 200, 1),
           body: NewsList()
       ),
     );

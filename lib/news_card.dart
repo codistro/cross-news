@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import './news_open.dart';
 
 class NewsCard extends StatelessWidget {
@@ -13,17 +14,25 @@ class NewsCard extends StatelessWidget {
     var d = DateTime.parse(date);
 
     var hours = now.difference(d).inHours;
+    var minutes = now.difference(d).inMinutes;
 
     if (hours <= 0) {
-      return '${now.difference(d).inMinutes} minutes ago';
+      if (minutes == 1)
+        return '$minutes minute ago';
+      else
+        return '$minutes minutes ago';
+    } else {
+      if (hours == 1)
+        return '$hours hour ago';
+      else
+        return '$hours hours ago';
     }
-    return '$hours hours ago';
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 3,
+      elevation: 0,
       margin: EdgeInsets.fromLTRB(10, 10, 10, 14),
       child: GestureDetector(
         onTap: () {
@@ -45,7 +54,12 @@ class NewsCard extends StatelessWidget {
               ),
             ),
             list[index]['urlToImage'] != null
-                ? Image.network(list[index]['urlToImage'])
+                ? CachedNetworkImage(
+                    imageUrl: list[index]['urlToImage'],
+                    placeholder: (context, url) =>
+                        new LinearProgressIndicator(backgroundColor: Colors.red,),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                  )
                 : Container(),
             Container(
               child: Text(
@@ -66,7 +80,9 @@ class NewsCard extends StatelessWidget {
                     ),
                     margin: EdgeInsets.fromLTRB(0, 0, 10.0, 0),
                   ),
-                  Text(_getTime(list[index]['publishedAt']),)
+                  Text(
+                    _getTime(list[index]['publishedAt']),
+                  )
                 ],
               ),
             )
