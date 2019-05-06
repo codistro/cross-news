@@ -5,6 +5,11 @@ import 'package:http/http.dart' as http;
 import './news_card.dart';
 
 class NewsList extends StatefulWidget {
+
+  final String category;
+
+  NewsList({@required this.category});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -12,12 +17,14 @@ class NewsList extends StatefulWidget {
   }
 }
 
-class _NewsListState extends State<NewsList> {
+class _NewsListState extends State<NewsList>
+    with AutomaticKeepAliveClientMixin<NewsList> {
   List<dynamic> list = [];
+  String category;
 
   Future<Null> getNews() async {
-    var response = await http.get(
-        "https://newsapi.org/v2/top-headlines?country=in&apiKey=95969a234afd445182b47718844222df");
+    String url = 'https://newsapi.org/v2/top-headlines?country=in&category=$category&apiKey=95969a234afd445182b47718844222df';
+    var response = await http.get(url);
 
     Map<String, dynamic> result = json.decode(response.body);
     setState(() {
@@ -28,33 +35,21 @@ class _NewsListState extends State<NewsList> {
 
   @override
   void initState() {
+    category = widget.category;
     getNews();
     super.initState();
   }
 
   @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: getNews,
-      displacement: 100.0,
-      child: CustomScrollView(slivers: <Widget>[
-        SliverAppBar(
-            elevation: 0,
-            title: Text(
-              'Top News',
-              style: TextStyle(color: Colors.black),
-            ),
-            floating: true,
-            backgroundColor: Colors.white),
-        SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return NewsCard(list, index);
-                  },
-                  childCount: list.length,
-                ),
-              )
-      ]),
-    );
+    return ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return NewsCard(list, index);
+        });
   }
 }

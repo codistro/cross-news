@@ -31,8 +31,9 @@ class _NewsOpenState extends State<NewsOpen>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text(url, overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 16),),
-        backgroundColor: Colors.red,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(url, overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 16,color: Colors.black),),
+        backgroundColor: Colors.white,
       ),
       body: WebView(
         initialUrl: this.url,
