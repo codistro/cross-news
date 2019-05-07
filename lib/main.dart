@@ -44,8 +44,10 @@ class _MyApp extends State<MyApp> with SingleTickerProviderStateMixin {
                     backgroundColor: Colors.white,
                     bottom: TabBar(
                       isScrollable: true,
-                      labelColor: Colors.black,
+                      labelColor: Colors.blueAccent,
+                      unselectedLabelColor: Colors.black,
                       indicatorColor: Colors.blueAccent,
+                      indicatorWeight: 3,
                       tabs: <Widget>[
                         Tab(text: 'Top'),
                         Tab(text: 'Sports'),

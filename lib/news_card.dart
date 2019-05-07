@@ -33,7 +33,7 @@ class NewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 14),
+      margin: EdgeInsets.fromLTRB(10, 0, 10, 14),
       child: GestureDetector(
         onTap: () {
           //var url = list[index]['url'];

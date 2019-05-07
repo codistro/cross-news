@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import './news_card.dart';
 
 class NewsList extends StatefulWidget {
-
   final String category;
 
   NewsList({@required this.category});
@@ -23,7 +22,8 @@ class _NewsListState extends State<NewsList>
   String category;
 
   Future<Null> getNews() async {
-    String url = 'https://newsapi.org/v2/top-headlines?country=in&category=$category&apiKey=95969a234afd445182b47718844222df';
+    String url =
+        'https://newsapi.org/v2/top-headlines?country=in&category=$category&apiKey=95969a234afd445182b47718844222df';
     var response = await http.get(url);
 
     Map<String, dynamic> result = json.decode(response.body);
@@ -46,10 +46,15 @@ class _NewsListState extends State<NewsList>
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return NewsCard(list, index);
-        });
+    return RefreshIndicator(
+      onRefresh: getNews,
+      child: list.length == 0
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return NewsCard(list, index);
+              }),
+    );
   }
 }
